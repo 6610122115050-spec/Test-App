@@ -26,7 +26,7 @@ const ShootingStarsBackground = () => {
       {/* แสงฟุ้งกระจาย Background */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px]" />
-      
+
       <style jsx>{`
         @keyframes shooting {
           0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
@@ -41,7 +41,7 @@ const ShootingStarsBackground = () => {
           animation: shooting linear infinite;
         }
       `}</style>
-      
+
       {stars.map((star) => (
         <div
           key={star.id}
@@ -80,7 +80,7 @@ export default function Home() {
         </Link>
         <div className="flex gap-4">
           <Link href="/marketplace">
-          <Button variant="ghost" className="hover:bg-white/5 text-zinc-300">Marketplace</Button>
+            <Button variant="ghost" className="hover:bg-white/5 text-zinc-300">Marketplace</Button>
           </Link>
           {/* ส่วนที่แก้ไข: เพิ่ม Link ครอบปุ่ม Login */}
           <Link href="/login">
@@ -110,21 +110,21 @@ export default function Home() {
         {/* Game Cards Grid (4 Columns) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {games.map((game) => (
-            <div key={game.id} className="group relative">
+            <Link href={`/games/${game.id}`} key={game.id} className="block group relative">
               {/* Card Glow Background */}
               <div className={`absolute -inset-1 bg-gradient-to-r ${game.color} rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-30 transition duration-500`}></div>
-              
-              <Card className="relative bg-zinc-900/50 border-white/10 backdrop-blur-3xl rounded-[2.5rem] overflow-hidden transition-all duration-500 group-hover:-translate-y-4 group-hover:border-white/20">
+
+              <Card className="relative bg-zinc-900/50 border-white/10 backdrop-blur-3xl rounded-[2.5rem] overflow-hidden transition-all duration-500 group-hover:-translate-y-4 group-hover:border-white/20 h-full">
                 <CardHeader className="h-48 relative flex items-center justify-center">
-                   <div className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-10 group-hover:opacity-20`}></div>
-                   <div className="text-8xl filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transform group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500">
-                     {game.icon}
-                   </div>
-                   <Badge className="absolute top-4 right-4 bg-white/10 backdrop-blur-md border-white/20 text-[10px] font-bold">
-                     {game.promo}
-                   </Badge>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-10 group-hover:opacity-20`}></div>
+                  <div className="text-8xl filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transform group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500">
+                    {game.icon}
+                  </div>
+                  <Badge className="absolute top-4 right-4 bg-white/10 backdrop-blur-md border-white/20 text-[10px] font-bold">
+                    {game.promo}
+                  </Badge>
                 </CardHeader>
-                
+
                 <CardContent className="p-8">
                   <h3 className="text-2xl font-bold mb-1 tracking-tight">{game.name}</h3>
                   <p className="text-zinc-500 text-sm font-medium">Auto Delivery • 24/7</p>
@@ -136,7 +136,7 @@ export default function Home() {
                   </Button>
                 </CardFooter>
               </Card>
-            </div>
+            </Link>
           ))}
         </div>
       </main>

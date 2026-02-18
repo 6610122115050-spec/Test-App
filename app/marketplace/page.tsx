@@ -1,4 +1,4 @@
-"use client"; // สำคัญมาก: ต้องอยู่บรรทัดที่ 1
+"use client";
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
@@ -6,10 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-// --- ส่วนของ Background ดาวตก ---
 const ShootingStars = () => {
   const [stars, setStars] = useState<any[]>([]);
-
   useEffect(() => {
     const newStars = Array.from({ length: 15 }).map((_, i) => ({
       id: i,
@@ -32,23 +30,14 @@ const ShootingStars = () => {
         .star-anim { animation: fall linear infinite; }
       `}</style>
       {stars.map((star) => (
-        <div
-          key={star.id}
-          className="absolute h-[1px] w-[80px] bg-gradient-to-r from-white to-transparent star-anim"
-          style={{
-            left: star.left,
-            top: star.top,
-            animationDelay: star.delay,
-            animationDuration: star.duration,
-            opacity: 0,
-          }}
+        <div key={star.id} className="absolute h-[1px] w-[80px] bg-gradient-to-r from-white to-transparent star-anim"
+          style={{ left: star.left, top: star.top, animationDelay: star.delay, animationDuration: star.duration, opacity: 0 }}
         />
       ))}
     </div>
   );
 };
 
-// --- หน้าหลัก Marketplace ---
 export default function MarketplacePage() {
   const [category, setCategory] = useState("All");
 
@@ -60,34 +49,45 @@ export default function MarketplacePage() {
   ];
 
   return (
-    <div className="min-h-screen text-white relative">
+    <div className="min-h-screen text-white relative font-sans">
       <ShootingStars />
 
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-6 backdrop-blur-md bg-black/20 border-b border-white/5 sticky top-0 z-50">
-        <Link href="/" className="text-2xl font-black tracking-tighter bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+      {/* Navbar - ปรับให้ตัวหนังสือ Login ขาวชัดเจน */}
+      <nav className="flex items-center justify-between px-8 py-6 backdrop-blur-md bg-black/40 border-b border-white/10 sticky top-0 z-50">
+        <Link href="/" className="text-3xl font-black tracking-tighter bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent drop-shadow-sm">
           TOPUP.PRO
         </Link>
-        <div className="flex gap-4">
-          <Link href="/"><Button variant="ghost">Home</Button></Link>
-          <Link href="/login"><Button className="bg-blue-600 rounded-full px-6">Login</Button></Link>
+        <div className="flex gap-6 items-center">
+          <Link href="/" className="text-white hover:text-cyan-400 font-bold transition-colors">Home</Link>
+          <Link href="/login">
+            <Button className="bg-blue-600 hover:bg-blue-500 text-white rounded-full px-8 font-black shadow-lg shadow-blue-900/40">
+              LOGIN
+            </Button>
+          </Link>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto py-12 px-6">
-        <div className="mb-12">
-          <h1 className="text-5xl font-black mb-2 tracking-tight">MARKETPLACE</h1>
-          <p className="text-zinc-500">เลือกซื้อไอเทมยอดนิยมจากทั่วโลก</p>
+      <main className="max-w-7xl mx-auto py-16 px-6">
+        {/* Header - เพิ่มความสว่างและขนาด */}
+        <div className="mb-14">
+          <h1 className="text-6xl font-black mb-4 tracking-tight text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.1)]">
+            MARKETPLACE
+          </h1>
+          <p className="text-zinc-300 text-xl font-medium">
+            เลือกซื้อไอเทมยอดนิยมจากทั่วโลก <span className="text-cyan-400">ราคาดีที่สุดในไทย</span>
+          </p>
         </div>
 
-        {/* Categories Filter */}
-        <div className="flex gap-3 mb-10 overflow-x-auto pb-4">
+        {/* Filter Categories - ปรับให้มองเห็นปุ่มชัดขึ้น */}
+        <div className="flex gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide">
           {["All", "PC Games", "Mobile Games", "Gift Cards"].map((cat) => (
             <Button
               key={cat}
               onClick={() => setCategory(cat)}
-              className={`rounded-xl px-8 transition-all ${
-                category === cat ? "bg-cyan-500 text-white" : "bg-white/5 text-zinc-400 hover:bg-white/10"
+              className={`rounded-2xl px-10 py-7 text-lg font-bold transition-all border-2 ${
+                category === cat 
+                ? "bg-cyan-500 border-cyan-300 text-white shadow-[0_0_25px_rgba(6,182,212,0.4)]" 
+                : "bg-zinc-900/80 border-white/10 text-zinc-300 hover:bg-zinc-800 hover:text-white"
               }`}
             >
               {cat}
@@ -95,23 +95,31 @@ export default function MarketplacePage() {
           ))}
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Product Grid - ปรับชื่อสินค้าให้ขาวเด่น */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {products
             .filter((p) => category === "All" || p.type === category)
             .map((item) => (
-              <Card key={item.id} className="bg-zinc-900/40 border-white/5 backdrop-blur-xl rounded-[2rem] hover:border-cyan-500/50 transition-all group">
-                <CardContent className="p-8 flex items-center gap-6">
-                  <div className="text-5xl group-hover:scale-110 transition-transform">{item.icon}</div>
-                  <div>
-                    <Badge variant="outline" className="text-cyan-400 border-cyan-400/30 mb-1">{item.tag}</Badge>
-                    <h3 className="text-xl font-bold">{item.name}</h3>
-                    <p className="text-cyan-400 font-black">{item.price}</p>
+              <Card key={item.id} className="bg-zinc-900/60 border-2 border-white/5 backdrop-blur-2xl rounded-[2.5rem] hover:border-cyan-500/50 transition-all group overflow-hidden shadow-2xl">
+                <CardContent className="p-10 flex items-center gap-8">
+                  <div className="text-6xl filter drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:scale-110 transition-transform duration-300">
+                    {item.icon}
+                  </div>
+                  <div className="space-y-1">
+                    <Badge className="bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold mb-2">
+                      {item.tag}
+                    </Badge>
+                    <h3 className="text-2xl font-black text-white leading-tight">
+                      {item.name}
+                    </h3>
+                    <p className="text-cyan-400 font-black text-2xl tracking-tight">
+                      {item.price}
+                    </p>
                   </div>
                 </CardContent>
-                <CardFooter className="px-8 pb-8 pt-0">
-                  <Button className="w-full bg-white/5 border border-white/10 rounded-2xl py-6 hover:bg-cyan-500 hover:text-white transition-all font-bold">
-                    Buy Now
+                <CardFooter className="px-10 pb-10 pt-0">
+                  <Button className="w-full bg-white/10 hover:bg-cyan-500 hover:text-white border-2 border-white/10 rounded-2xl py-8 text-xl font-black transition-all shadow-inner">
+                    BUY NOW
                   </Button>
                 </CardFooter>
               </Card>
