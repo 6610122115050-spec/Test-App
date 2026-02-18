@@ -122,5 +122,23 @@
   }
   body {
     @apply bg-background text-foreground;
+    
+  }  
+  /* app/globals.css */
+
+/* ... โค้ด Tailwind และ Global CSS อื่นๆ ของคุณ ... */
+
+@keyframes shooting-star {
+  0% {
+    transform: rotate(225deg) translateX(0);
+    opacity: 0;
   }
+  50% {
+    opacity: 1; /* แสดงขึ้น */
+  }
+  100% {
+    transform: rotate(225deg) translateX(-500px); /* ทิศทางดาวตก */
+    opacity: 0;
+  }
+}
 }
